@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.javafxports:jfxmobile-plugin:1.2.0'
+    }
+}
+
+apply plugin: 'org.javafxports.jfxmobile'
+
+repositories {
+    jcenter()
+    maven {
+        url 'http://nexus.gluonhq.com/nexus/content/repositories/releases'
+    }
+}
+
+mainClassName = 'com.gluonhq.otndemo.OtnDemo'
+
+dependencies {
+    compile 'com.gluonhq:charm:4.2.0'
+    compile 'com.gluonhq:glisten-afterburner:1.1.0'
+    compile 'com.google.zxing:core:3.2.1'
+    compileNoRetrolambda 'com.airhacks:afterburner.mfx:1.6.2'
+}
+
+jfxmobile {
+    downConfig {
+        version = '3.1.0'
+        // Do not edit the line below. Use Gluon Mobile Settings in your project context menu instead
+        plugins 'display', 'lifecycle', 'statusbar', 'storage'
+    }
+    android {
+        manifest = 'src/android/AndroidManifest.xml'
+    }
+    ios {
+        infoPList = file('src/ios/Default-Info.plist')
+        forceLinkClasses = [
+                'com.gluonhq.otndemo.**.*',
+                'com.gluonhq.**.*',
+                'javax.annotations.**.*',
+                'javax.inject.**.*',
+                'javax.json.**.*',
+                'org.glassfish.json.**.*'
+        ]
+    }
+}
